@@ -14,7 +14,7 @@ import urllib.request
 
 API_URL = "https://api.openai.com/v1/chat/completions"
 API_KEY_FILE = os.path.expanduser("~/.config/openai-key")
-MODEL = os.environ.get("TEXT_TO_VCF_MODEL", "gpt-4.1")
+MODEL = os.environ.get("TEXT_TO_VCF_MODEL", "").strip() or "gpt-4.1"
 
 PHONE_EMAIL_TYPE = {"type": ["string", "null"], "enum": ["home", "work", "mobile", "main", "fax", None]}
 
