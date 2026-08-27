@@ -155,7 +155,11 @@
 		</dict>
 	</array>
 	<key>readme</key>
-	<string>Select text and press ⌃⌥V, or type 'vcf' in Alfred, to extract contacts and open them as vCard in Contacts.</string>
+	<string>Select text and press ⌃⌥V, or type 'vcf' in Alfred, to extract contacts and open them as vCard in Contacts. Works on email signatures, imprints and address blocks; several contacts in one text become several cards.
+
+Phone numbers keep their kind (mobile, work, fax), organizational units land in the department field, and the original text is kept in the notes so you can see where a card came from.
+
+The OpenAI key goes in the configuration above, or in ~/.config/openai-key.</string>
 	<key>uidata</key>
 	<dict>
 		<key>hotkey-trigger</key>

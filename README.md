@@ -45,7 +45,12 @@ vcf Dr Erika Mustermann, Beispiel GmbH, +43 664 1234567
 ```
 
 Phone and email types are recognised where the text gives them away, so a
-number labelled mobile lands as `TEL;TYPE=CELL` rather than a bare number.
+number labelled mobile lands as `TEL;TYPE=CELL` rather than a bare number, and
+a fax number as `TEL;TYPE=FAX` rather than a line in the note.
+
+An organizational unit goes into the department half of `ORG`, so an
+institute's outpatient clinic reads as company and department on the card
+instead of being mistaken for a person's job title.
 
 The original text is kept in the note field, so you can see later what the
 contact was built from.
