@@ -220,20 +220,79 @@ The OpenAI key goes in the configuration above, or in ~/.config/openai-key.</str
 				<key>default</key>
 				<string></string>
 				<key>placeholder</key>
-				<string>gpt-4.1</string>
+				<string>gpt-6-luna</string>
 				<key>required</key>
 				<false/>
 				<key>trim</key>
 				<true/>
 			</dict>
 			<key>description</key>
-			<string>Empty uses gpt-4.1.</string>
+			<string>Empty uses gpt-6-luna.</string>
 			<key>label</key>
 			<string>Model</string>
 			<key>type</key>
 			<string>textfield</string>
 			<key>variable</key>
 			<string>TEXT_TO_VCF_MODEL</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string>low</string>
+				<key>pairs</key>
+				<array>
+					<array>
+						<string>Model default</string>
+						<string>default</string>
+					</array>
+					<array>
+						<string>None</string>
+						<string>none</string>
+					</array>
+					<array>
+						<string>Low</string>
+						<string>low</string>
+					</array>
+					<array>
+						<string>Medium</string>
+						<string>medium</string>
+					</array>
+					<array>
+						<string>High</string>
+						<string>high</string>
+					</array>
+				</array>
+				<key>required</key>
+				<false/>
+			</dict>
+			<key>description</key>
+			<string>Higher can be more accurate but takes longer. Use Model default for a model that refuses this.</string>
+			<key>label</key>
+			<string>Reasoning</string>
+			<key>type</key>
+			<string>popupbutton</string>
+			<key>variable</key>
+			<string>TEXT_TO_VCF_REASONING</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<true/>
+				<key>required</key>
+				<false/>
+				<key>text</key>
+				<string>Use OpenAI's Fast mode</string>
+			</dict>
+			<key>description</key>
+			<string>Quicker, at twice the price.</string>
+			<key>label</key>
+			<string>Fast mode</string>
+			<key>type</key>
+			<string>checkbox</string>
+			<key>variable</key>
+			<string>TEXT_TO_VCF_FAST</string>
 		</dict>
 	</array>
 	<key>variables</key>
@@ -248,7 +307,7 @@ The OpenAI key goes in the configuration above, or in ~/.config/openai-key.</str
 		<string>OPENAI_API_KEY</string>
 	</array>
 	<key>version</key>
-	<string>1.0.3</string>
+	<string>1.0.4</string>
 	<key>webaddress</key>
 	<string>https://github.com/hendryque/alfred-text-to-vcf</string>
 </dict>

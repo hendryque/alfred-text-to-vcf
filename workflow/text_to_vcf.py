@@ -14,7 +14,8 @@ import urllib.request
 
 API_URL = "https://api.openai.com/v1/chat/completions"
 API_KEY_FILE = os.path.expanduser("~/.config/openai-key")
-MODEL = os.environ.get("TEXT_TO_VCF_MODEL", "").strip() or "gpt-4.1"
+MODEL = os.environ.get("TEXT_TO_VCF_MODEL", "").strip() or "gpt-6-luna"
+DEFAULT_REASONING = "low"
 
 PHONE_EMAIL_TYPE = {"type": ["string", "null"], "enum": ["home", "work", "mobile", "main", "fax", None]}
 
@@ -187,6 +188,18 @@ def get_input_text():
     fail("No input text")
 
 
+def model_options():
+    """Reasoning and Fast mode for the request; "default" leaves the choice to the model."""
+    options = {}
+    level = os.environ.get("TEXT_TO_VCF_REASONING", "").strip().lower() or DEFAULT_REASONING
+    if level != "default":
+        options["reasoning_effort"] = level
+    # Alfred passes a checkbox as 1 or 0. Unset means the default, which is on.
+    if os.environ.get("TEXT_TO_VCF_FAST", "").strip().lower() not in ("0", "false"):
+        options["service_tier"] = "fast"
+    return options
+
+
 def extract_contacts(text, api_key):
     payload = {
         "model": MODEL,
@@ -195,7 +208,7 @@ def extract_contacts(text, api_key):
             {"role": "system", "content": SYSTEM_PROMPT},
             {"role": "user", "content": text},
         ],
-        "temperature": 0.0,
+        **model_options(),
     }
     req = urllib.request.Request(
         API_URL,
@@ -216,6 +229,8 @@ def extract_contacts(text, api_key):
             fail("OpenAI account is out of credits. Add credits at platform.openai.com > Billing.", detail)
         if exc.code == 429:
             fail("Rate limited by OpenAI (429). Wait a minute and try again.", detail)
+        if exc.code == 400 and "reasoning_effort" in error_body:
+            fail("This model refuses the reasoning setting. Set Reasoning to Model default in the workflow configuration.", detail)
         fail(f"OpenAI returned HTTP {exc.code}.", detail)
     except urllib.error.URLError as exc:
         # No response object exists here, so nothing may reference one.

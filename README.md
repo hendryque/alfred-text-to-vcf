@@ -60,7 +60,13 @@ contact was built from.
 | Setting | Default | Notes |
 |---|---|---|
 | `OPENAI_API_KEY` | reads `~/.config/openai-key` | |
-| `TEXT_TO_VCF_MODEL` | `gpt-4.1` | Any chat model that supports structured output |
+| `TEXT_TO_VCF_MODEL` | `gpt-6-luna` | Any chat model that supports structured output |
+| `TEXT_TO_VCF_REASONING` | `low` | `none`, `low`, `medium` or `high`; `default` sends nothing and lets the model decide |
+| `TEXT_TO_VCF_FAST` | on | OpenAI's Fast mode: quicker, at twice the price; `0` turns it off |
+
+Fast mode and low reasoning are the defaults because this runs while you wait.
+With a different model, some settings may not apply: `gpt-4.1`, for one, refuses a
+reasoning level, so it needs Reasoning set to `default`.
 
 ## Command line
 
@@ -94,6 +100,9 @@ platform.openai.com; retrying will not help until you do.
 retry.
 
 **No contacts found in text.** The model saw nothing that looked like a person.
+
+**This model refuses the reasoning setting.** Set Reasoning to Model default in
+the workflow configuration.
 
 **Nothing happens at all.** A failure normally shows as an alert, so
 silence points at the workflow rather than at OpenAI: check that
